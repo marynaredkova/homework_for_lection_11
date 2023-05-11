@@ -1,0 +1,197 @@
+import pandas as pd
+
+df = pd.read_csv('C:\\Users\\maryn\\Downloads\\iris_csv.csv')
+df.head()
+
+import numpy as np
+
+df.isnull().sum()
+
+df.describe()
+
+df.corr()
+
+# sepallength корелює з petallength та petalwidth. 
+# petallength корелює з petalwidth
+
+sns.pairplot(df)
+
+sns.heatmap(df.corr())
+
+df['sepallength'].plot.hist(label = 'sepallength')
+
+df['sepallength'].plot.hist(bins = 50, label = 'sepallength')
+
+df['sepalwidth'].plot.hist(label = 'sepalwidth')
+
+df['sepalwidth'].plot.hist(bins = 50, label = 'sepalwidth')
+
+df['petallength'].plot.hist(label = 'petallength')
+
+df['petallength'].plot.hist(bins = 50, label = 'petallength')
+
+df['petalwidth'].plot.hist(label = 'petalwidth')
+
+df['petalwidth'].plot.hist(bins = 50, label = 'petalwidth')
+
+import seaborn as sns
+
+import matplotlib as plt
+
+from matplotlib import figure
+f = figure.Figure( figsize =(7,7) )
+
+sns.boxplot(df['sepallength'])
+
+#дисперсія
+np.var(df['sepallength'])
+
+#standard deviation = корінь з дисперсії
+np.std(df['sepallength'])
+
+from matplotlib import figure
+f = figure.Figure( figsize =(7,7) )
+
+sns.boxplot(df['sepalwidth'])
+#outlier лежить за межами стандартного відхилення. 
+
+#дисперсія
+np.var(df['sepalwidth'])
+
+#standard deviation = корінь з дисперсії
+np.std(df['sepalwidth'])
+
+from matplotlib import figure
+f = figure.Figure( figsize =(7,7) )
+
+sns.boxplot(df['petallength'])
+
+#дисперсія
+np.var(df['petallength'])
+
+#standard deviation = корінь з дисперсії
+np.std(df['petallength'])
+
+from matplotlib import figure
+f = figure.Figure( figsize =(7,7) )
+
+sns.boxplot(df['petalwidth'])
+
+#дисперсія
+np.var(df['petalwidth'])
+
+#standard deviation = корінь з дисперсії
+np.std(df['petalwidth'])
+
+import scipy
+
+scipy.stats.shapiro(df['sepallength'])
+#p-value < 0.05, розподіл ненормальний
+
+import scipy
+
+scipy.stats.shapiro(df['sepalwidth'])
+#p-value > 0.05, розподіл нормальний
+
+import scipy
+
+scipy.stats.shapiro(df['petallength'])
+#p-value < 0.05, розподіл ненормальний
+
+import scipy
+
+scipy.stats.shapiro(df['petalwidth'])
+#p-value < 0.05, розподіл ненормальний
+
+#нульова гіпотеза з голови: середні значення половинок вибірки рівні. 
+half = len(df['sepallength'])/2
+
+df_1 = df.loc[:half, 'sepallength']
+df_2 = df.loc[half:, 'sepallength']
+df_1.head()
+
+scipy.stats.ttest_ind(df_1, df_2)
+#відхиляємо гіпотезу рівності середніх значень половинок вибірки - p-value занадто мале. 
+
+import matplotlib.pyplot as plt
+
+plt.hist(df_1, bins = 50, label = 'df_1')
+plt.hist(df_2, bins = 50, label = 'df_2')
+plt.legend()
+plt.show()
+
+df_1.describe()
+
+df_2.describe()
+
+# mean з різницею в одиницю
+# квартилі 25 і 75 другої вибірки на одиницю більші за першу
+
+#нульова гіпотеза з голови: середні значення половинок вибірки рівні. 
+half = len(df['sepalwidth'])/2
+
+df_1 = df.loc[:half, 'sepalwidth']
+df_2 = df.loc[half:, 'sepalwidth']
+df_1.head()
+
+scipy.stats.ttest_ind(df_1, df_2)
+#відхиляємо гіпотезу рівності середніх значень половинок вибірки - p-value занадто мале. 
+
+import matplotlib.pyplot as plt
+
+plt.hist(df_1, bins = 50, label = 'df_1')
+plt.hist(df_2, bins = 50, label = 'df_2')
+plt.legend()
+plt.show()
+
+df_1.describe()
+
+df_2.describe()
+
+# mean з різницею в 0,3
+# квартиль 25 з різницею в 0,3, квартиль 75 з різницею в 0,5
+
+#нульова гіпотеза з голови: середні значення половинок вибірки рівні. 
+half = len(df['petallength'])/2
+
+df_1 = df.loc[:half, 'petallength']
+df_2 = df.loc[half:, 'petallength']
+df_1.head()
+
+scipy.stats.ttest_ind(df_1, df_2)
+#відхиляємо гіпотезу рівності середніх значень половинок вибірки - p-value занадто мале. 
+
+plt.hist(df_1, bins = 50, label = 'df_1')
+plt.hist(df_2, bins = 50, label = 'df_2')
+plt.legend()
+plt.show()
+
+df_1.describe()
+
+df_2.describe()
+
+# mean з різницею вдвічі. 
+# квартиль 25 з різницею втричі, квартиль 75 з різницею на 1,6
+
+#нульова гіпотеза з голови: середні значення половинок вибірки рівні. 
+half = len(df['petalwidth'])/2
+
+df_1 = df.loc[:half, 'petalwidth']
+df_2 = df.loc[half:, 'petalwidth']
+df_1.head()
+
+scipy.stats.ttest_ind(df_1, df_2)
+#відхиляємо гіпотезу рівності середніх значень половинок вибірки - p-value занадто мале. 
+
+plt.hist(df_1, bins = 50, label = 'df_1')
+plt.hist(df_2, bins = 50, label = 'df_2')
+plt.legend()
+plt.show()
+
+df_1.describe()
+
+df_2.describe()
+
+# mean з різницею в одиницю. 
+# квартиль 25 з різницею на 1,2, квартиль 75 з різницею на 1,2. 
+
